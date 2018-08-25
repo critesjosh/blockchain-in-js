@@ -1,0 +1,26 @@
+body {
+    font-size: 10px;
+}
+
+.block {
+    margin: 0px auto;
+    border: 1px solid black;
+}
+
+.block:nth-child(odd) .hash {
+    color: blue;
+}
+
+.block:nth-child(odd) .prevHash {
+    color: red;
+}
+
+
+.block:nth-child(even) .hash {
+    color: red;
+}
+
+
+.block:nth-child(even) .prevHash {
+    color: blue;
+}

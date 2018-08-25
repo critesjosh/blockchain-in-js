@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>title</title>
+    <link rel="stylesheet" href="main.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="root">
+        <div>
+            <ol>
+                <block v-for="block in chain.chain"
+                       v-bind:block="block"
+                       v-bind:key="block.index">
+                </block>
+            </ol>
+        </div>
+        <button id="mineButton" v-on:click="mineBlock">Mine A block</button>
+      </div>
+  </body>
+  <script src="./bundle.js"></script>
+</html>

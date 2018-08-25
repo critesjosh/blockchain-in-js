@@ -1,0 +1,18 @@
+{
+  "name": "javascript-blockchain",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "watchify main.js -o bundle.js",
+    "reload": "reload -w bundle.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "crypto-js": "^3.1.9-1",
+    "reload": "^2.3.1",
+    "watchify": "^3.11.0"
+  }
+}
