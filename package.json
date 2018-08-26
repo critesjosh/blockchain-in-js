@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "watchify main.js -o bundle.js",
-    "reload": "reload -w bundle.js"
+    "reload": "reload -p 8081"
   },
   "author": "",
   "license": "ISC",

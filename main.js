@@ -12,9 +12,9 @@ class Block {
         this.hash = this.calculateHash()
     }
 
-    calculateHash () {
-        return SHA256(this.index + this.previousHash + this.timestamp + this.data + this.nonce).toString();
-    }
+    // calculateHash () {
+    //     return SHA256(this.index + this.previousHash + this.timestamp + this.data + this.nonce).toString();
+    // }
 
     randomTransactions(){
         const max = 5
@@ -81,25 +81,30 @@ class Blockchain {
 Vue.component("block", {
     props: ['block'],
     template: `<div class="block">
-                <div>Block number: {{ block.index }}</div>
-                <div class="prevHash">Previous hash: {{ block.previousHash }}</div>
+                <h3>Block number: {{ block.index }}</h3>
+                <div class="hash">Hash: {{ block.hash }}</div>
                 <div>Timestamp: {{ block.timestamp }}</div>
                 <div>Data: {{ block.data }}</div>
                 <div>Nonce: {{ block.nonce }}</div>
-                <div class="hash">Hash: {{ block.hash }}</div>
+                <div class="prevHash">Previous hash: {{ block.previousHash }}</div>
               </div>`
-})
+}) 
 
 new Vue({
     el:"#root",
-    data: {
-        chain: new Blockchain()  
+    data() {
+        return { chain: new Blockchain() }  
     },
     methods: {
         mineBlock: function(){
             let block = new Block(Date.now(), "data")
             this.chain.mineBlock(block)
             console.log(this.chain)
+        }
+    },
+    computed: {
+        reverseChain: function(){
+            return this.chain.chain.slice().reverse()
         }
     }
 })

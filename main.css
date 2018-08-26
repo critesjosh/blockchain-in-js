@@ -1,10 +1,16 @@
 body {
-    font-size: 10px;
+    font-size: 16px;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
 }
 
 .block {
-    margin: 0px auto;
+    margin: 15px auto;
+    padding: 15px;
     border: 1px solid black;
+}
+
+.block h3 {
+    text-align: center;
 }
 
 .block:nth-child(odd) .hash {
@@ -15,11 +21,9 @@ body {
     color: red;
 }
 
-
 .block:nth-child(even) .hash {
     color: red;
 }
-
 
 .block:nth-child(even) .prevHash {
     color: blue;

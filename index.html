@@ -3,20 +3,21 @@
   <head>
     <meta charset="UTF-8">
     <title>title</title>
+    <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c" rel="stylesheet">
     <link rel="stylesheet" href="main.css">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   </head>
   <body>
     <div id="root">
+        <button id="mineButton" v-on:click="mineBlock">Mine A block</button>
         <div>
             <ol>
-                <block v-for="block in chain.chain"
+                <block v-for="block in reverseChain"
                        v-bind:block="block"
                        v-bind:key="block.index">
                 </block>
             </ol>
         </div>
-        <button id="mineButton" v-on:click="mineBlock">Mine A block</button>
       </div>
   </body>
   <script src="./bundle.js"></script>
