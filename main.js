@@ -3,27 +3,25 @@ const SHA256 = require('crypto-js/sha256')
 const BC = require("./utils/blockchain-helpers.js")
 const transactions = require("./utils/transactions-list.js")
 
-const MAX_SHA256 = 2 ** 256
-
 class Block {
     constructor(timestamp, data) {
         this.index = 0
         this.previousHash = "0"
         this.timestamp = timestamp
-        this.data = this.randomTransactions()
+        this.data = transactions[0]
         this.nonce = 0
         this.hash = BC.calculateHashForBlock(this)
     }
 
-    randomTransactions(){
-        const max = 5
-        const length = Math.floor(Math.random() * Math.floor(max))
-        let array = []
-        for(let i = 0; i < length; i++){
-            array[i] = transactions[i]
-        }
-        return array;
-    }
+    // randomTransactions(){
+    //     const max = 5
+    //     const length = Math.floor(Math.random() * Math.floor(max))
+    //     let array = []
+    //     for(let i = 0; i < length; i++){
+    //         array[i] = transactions[i]
+    //     }
+    //     return array;
+    // }
 
 }
 
@@ -38,30 +36,15 @@ class Blockchain {
         return new Block(Date.now(), {})
     }
 
-    addBlock(block) {
-        if(this.isValidBlock(block)){
-            this.chain.push(block)
-        }
-    }
-
-    isValidBlock(block){
-        const previousBlock = this.chain[this.chain.length - 1]
-        return (parseInt(BC.calculateHashForBlock(block), 16) <= MAX_SHA256 / this.difficulty) && 
-            previousBlock.index + 1 === block.index &&
-            BC.calculateHashForBlock(previousBlock) === block.previousHash
-    }
-
     // Look for a valid solution to the block, try again on failure
     mineBlock(block) {
-        var hash = BC.calculateHashForBlock(block)
-
         block.previousHash = BC.calculateHashForBlock(BC.getLatestBlock(this.chain))
+        block.hash = BC.calculateHashForBlock(block)
         block.index = this.chain.length
 
-        if(this.isValidBlock(block)){
-            block.hash = BC.calculateHashForBlock(block)
-            this.addBlock(block)
-        } else {
+        if(BC.isValidBlock(block, this)){
+            this.chain.push(block)
+        } else {    
             block.nonce++
             this.mineBlock(block)
         }
@@ -90,7 +73,6 @@ new Vue({
         mineBlock: function(){
             let block = new Block(Date.now(), "data")
             this.chain.mineBlock(block)
-            console.log(this.chain)
         }
     },
     computed: {
