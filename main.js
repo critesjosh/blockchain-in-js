@@ -1,5 +1,8 @@
 const SHA256 = require('crypto-js/sha256')
 
+const BC = require("./utils/blockchain-helpers.js")
+const transactions = require("./utils/transactions-list.js")
+
 const MAX_SHA256 = 2 ** 256
 
 class Block {
@@ -9,19 +12,15 @@ class Block {
         this.timestamp = timestamp
         this.data = this.randomTransactions()
         this.nonce = 0
-        this.hash = this.calculateHash()
+        this.hash = BC.calculateHashForBlock(this)
     }
-
-    // calculateHash () {
-    //     return SHA256(this.index + this.previousHash + this.timestamp + this.data + this.nonce).toString();
-    // }
 
     randomTransactions(){
         const max = 5
         const length = Math.floor(Math.random() * Math.floor(max))
         let array = []
         for(let i = 0; i < length; i++){
-            array[i] = { "amount": Math.floor(Math.random() * Math.floor(max)) }
+            array[i] = transactions[i]
         }
         return array;
     }
@@ -47,34 +46,26 @@ class Blockchain {
 
     isValidBlock(block){
         const previousBlock = this.chain[this.chain.length - 1]
-        return (parseInt(block.calculateHash(), 16) <= MAX_SHA256 / this.difficulty) && 
+        return (parseInt(BC.calculateHashForBlock(block), 16) <= MAX_SHA256 / this.difficulty) && 
             previousBlock.index + 1 === block.index &&
-            previousBlock.calculateHash() === block.previousHash
+            BC.calculateHashForBlock(previousBlock) === block.previousHash
     }
 
     // Look for a valid solution to the block, try again on failure
     mineBlock(block) {
-        var hash = block.calculateHash()
+        var hash = BC.calculateHashForBlock(block)
 
-        block.previousHash = this.chain[this.chain.length-1].calculateHash()
+        block.previousHash = BC.calculateHashForBlock(BC.getLatestBlock(this.chain))
         block.index = this.chain.length
 
         if(this.isValidBlock(block)){
-            block.hash = block.calculateHash()
+            block.hash = BC.calculateHashForBlock(block)
             this.addBlock(block)
         } else {
             block.nonce++
             this.mineBlock(block)
         }
     }    
-
-    increaseDifficulty(){
-        this.difficulty = this.difficulty * 10
-    }
-
-    decreaseDifficulty(){
-        this.difficulty = this.difficulty / 10
-    }
 
 }
 

@@ -1,5 +1,5 @@
-module.exports = {
-    transactions: [
+module.exports = 
+    [
         {to: "alice", from: "bob", amount: 5432},
         {to: "bob", from: "carl", amount: 2345},
         {to: "carl", from: "dan", amount: 5474},
@@ -11,4 +11,3 @@ module.exports = {
         {to: "anant", from: "andrew", amount: 73},
         {to: "andrew", from: "susan", amount: 35}
     ]
-}

@@ -8,6 +8,16 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   </head>
   <body>
+    <h1>Blockchain in Javascript</h1>
+    <p>Each block contains the following</p>
+    <ul>
+      <li>A hash of the block data</li>
+      <li>A timestamp of the block</li>
+      <li>Block data including a list of transactions</li>
+      <li>A nonce (a random number modified to alter the block hash, used in Proof of Work)</li>
+      <li>A reference to the hash of the previous block in the chain</li>
+    </ul>
+    <p>Click to "mine a block"</p>
     <div id="root">
         <button id="mineButton" v-on:click="mineBlock">Mine A block</button>
         <div>
